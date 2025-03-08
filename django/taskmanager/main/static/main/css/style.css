@@ -91,7 +91,6 @@ main .features p {
     margin: var(--index) auto;
 }
 
-/* Исправленный стиль для новостей */
 .alert-warning {
     clear: both;
     width: 60%;
@@ -108,4 +107,23 @@ main .features p {
     font-weight: bold;
     color: #333;
     font-size: 1.5rem;
+}
+
+.text {
+    margin: calc(var(--index) * .5) auto;
+    width: calc(var(--index) * 20);
+    border-radius: 8px;
+    color: #797979;
+}
+
+.text-input {
+    height: calc(var(--index) * 2);
+}
+
+.text-textarea {
+    height: calc(var(--index) * 4);
+}
+
+.text-date {
+    height: calc(var(--index) * 2);
 }
