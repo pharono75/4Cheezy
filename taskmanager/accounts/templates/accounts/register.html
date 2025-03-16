@@ -1,0 +1,39 @@
+{% extends 'main/layout.html' %}
+
+{% block title %}Регистрация{% endblock %}
+
+{% block content %}
+    <div class="features max-w-md mx-auto mt-10 p-6 bg-gray-800 rounded-lg shadow-lg">
+        <h1 class="text-2xl font-bold text-white mb-4">Регистрация</h1>
+        {% if messages %}
+            {% for message in messages %}
+                <div class="p-2 rounded mb-4 {% if message.tags == 'success' %}bg-green-600{% else %}bg-red-600{% endif %} text-white text-center">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+        <form method="post" class="space-y-4">
+            {% csrf_token %}
+            {% for field in form %}
+                <div class="relative">
+                    <p>{{ field.label_tag }}</p>
+                    {{ field }}
+                    {% if field.errors %}
+                        {% for error in field.errors %}
+                            <span class="block text-red-500 text-sm mt-1">{{ error }}</span> <!-- Временно убрали hidden -->
+                            {% if field.name == 'username' %}
+                                <span class="absolute top-0 right-0 text-xs text-gray-400 mr-2" title="Обязательное поле. Только буквы, цифры и символы @/./+/-/_.">?</span>
+                            {% elif field.name == 'password1' %}
+                                <span class="absolute top-0 right-0 text-xs text-gray-400 mr-2" title="Обязательное поле. Минимум 8 символов.">?</span>
+                            {% elif field.name == 'password2' %}
+                                <span class="absolute top-0 right-0 text-xs text-gray-400 mr-2" title="Повторите пароль.">?</span>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            {% endfor %}
+            <button class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5" type="submit">Зарегистрироваться</button>
+        </form>
+        <p class="mt-4 text-gray-400 text-center">Уже есть аккаунт? <a href="{% url 'login' %}" class="text-blue-400 hover:underline">Войдите</a></p>
+    </div>
+{% endblock %}

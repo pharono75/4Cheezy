@@ -1,0 +1,18 @@
+{% extends 'main/layout.html' %}
+
+{% block title %}Форма по добавлению статьи{% endblock %}
+
+{% block content %}
+    <div class="features">
+        <h1>Форма по добавлению статьи</h1>
+        <form method="post">
+            {% csrf_token %} <br>
+            {{ form.title }} <br>
+            {{ form.anons }} <br>
+            {{ form.full_text }} <br>
+            {{ form.date }} <br>
+            <span>{{ error }}</span>
+            <button class="btn focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900" type="submit">Добавить статьи</button>
+        </form>
+    </div>
+{% endblock %}
