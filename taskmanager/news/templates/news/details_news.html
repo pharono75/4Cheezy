@@ -1,0 +1,39 @@
+{% extends 'layout.html' %}
+{% block title %}{{ article.title }}{% endblock %}
+{% block content %}
+    <div class="mt-10 px-4 sm:px-6 lg:px-8">
+        <div class="neumorphic p-6 sm:p-8 bg-white dark:bg-dark-card rounded-lg fade-in">
+            {% if article.image %}
+                <!-- Swiper -->
+                <div class="swiper mySwiper swiper-container mb-6">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide">
+                            <img src="{{ article.image.url }}" alt="{{ article.title }}" class="w-full h-64 sm:h-96 lg:h-[40rem] object-cover rounded-lg">
+                        </div>
+                    </div>
+                    <!-- Навигация -->
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                    <!-- Пагинация -->
+                    <div class="swiper-pagination"></div>
+                </div>
+            {% else %}
+                <div class="w-full h-64 sm:h-96 lg:h-[40rem] bg-gray-200 dark:bg-dark-border rounded-lg flex items-center justify-center text-gray-500 dark:text-dark-text mb-6">
+                    Нет изображения
+                </div>
+            {% endif %}
+            <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 text-gray-800 dark:text-dark-text bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600">{{ article.title }}</h1>
+            <p class="text-xs sm:text-sm text-gray-500 dark:text-dark-text mb-4">Автор: {{ article.author.username }} | {{ article.date|date:"d.m.Y H:i" }}</p>
+            <div class="divider"></div>
+            <div class="prose prose-sm sm:prose-lg dark:prose-invert max-w-none">
+                {{ article.full_text|linebreaks }}
+            </div>
+            {% if user.is_authenticated and user == article.author %}
+                <div class="mt-6 flex flex-col sm:flex-row sm:space-x-4 space-y-4 sm:space-y-0">
+                    <a href="{% url 'news-update' article.id %}" class="px-4 py-2 text-white bg-green-600 hover:bg-green-700 rounded-lg glass-button transition-all duration-300">Изменить</a>
+                    <a href="{% url 'news-delete' article.id %}" class="px-4 py-2 text-white bg-red-600 hover:bg-red-700 rounded-lg glass-button transition-all duration-300">Удалить</a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

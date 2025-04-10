@@ -1,0 +1,233 @@
+/* static/css/style.css */
+
+/* Стили для полей формы */
+form input[type="text"],
+form input[type="password"],
+form input[type="email"] {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    font-size: 1.1rem;
+    border-radius: 0.5rem;
+    background: #f0f0f0;
+    border: 1px solid #d1d5db;
+    transition: all 0.3s ease;
+    box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.05), inset -2px -2px 5px rgba(255, 255, 255, 0.7);
+}
+
+form input[type="text"]:focus,
+form input[type="password"]:focus,
+form input[type="email"]:focus {
+    outline: none;
+    border-color: #4a90e2;
+    background: #ffffff;
+    box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.1), inset -2px -2px 5px rgba(255, 255, 255, 0.9);
+}
+
+.dark form input[type="text"],
+.dark form input[type="password"],
+.dark form input[type="email"] {
+    background: #2a2a2a;
+    border: 1px solid #3a3a3a;
+    color: #e0e0e0;
+}
+
+.dark form input[type="text"]:focus,
+.dark form input[type="password"]:focus,
+.dark form input[type="email"]:focus {
+    background: #3a3a3a;
+    border-color: #4a90e2;
+}
+
+form label {
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+/* Неоморфизм */
+.neumorphic {
+    box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.1), -10px -10px 20px rgba(255, 255, 255, 0.7);
+    background: linear-gradient(145deg, #f0f0f0, #e0e0e0);
+    transition: all 0.3s ease;
+}
+
+.neumorphic:hover {
+    box-shadow: 15px 15px 30px rgba(0, 0, 0, 0.15), -15px -15px 30px rgba(255, 255, 255, 0.9);
+    background: linear-gradient(145deg, #e0e0e0, #f0f0f0);
+}
+
+.dark .neumorphic {
+    box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.3), -10px -10px 20px rgba(255, 255, 255, 0.1);
+    background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+}
+
+.dark .neumorphic:hover {
+    box-shadow: 15px 15px 30px rgba(0, 0, 0, 0.4), -15px -15px 30px rgba(255, 255, 255, 0.15);
+    background: linear-gradient(145deg, #1a1a1a, #2a2a2a);
+}
+
+/* Глассморфизм */
+.glass {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.dark .glass {
+    background: rgba(40, 40, 40, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.glass-button {
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    transition: all 0.3s ease;
+}
+
+.glass-button:hover {
+    background: rgba(255, 255, 255, 0.3);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.dark .glass-button {
+    background: rgba(40, 40, 40, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.dark .glass-button:hover {
+    background: rgba(40, 40, 40, 0.5);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+/* Анимация появления */
+.fade-in {
+    opacity: 0;
+    animation: fadeIn 1s ease forwards;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Разделитель */
+.divider {
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(to right, transparent, #4a90e2, transparent);
+    margin: 1rem 0;
+}
+
+/* Стили для боковой панели */
+aside ul li a,
+aside ul li button {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 0.5rem 1rem;
+}
+
+#theme-toggle {
+    width: auto;
+    display: inline-flex;
+}
+
+/* Стили для Swiper */
+.swiper-button-next,
+.swiper-button-prev {
+    color: #4a90e2;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    transition: all 0.3s ease;
+    /* Позиционирование стрелок */
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10; /* Убедимся, что стрелки видны */
+}
+
+.swiper-button-next {
+    right: 10px; /* Возвращаем стрелки ближе к карусели */
+}
+
+.swiper-button-prev {
+    left: 10px;
+}
+
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+    background: rgba(255, 255, 255, 0.3);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.dark .swiper-button-next,
+.dark .swiper-button-prev {
+    background: rgba(40, 40, 40, 0.3);
+    color: #4a90e2;
+}
+
+.dark .swiper-button-next:hover,
+.dark .swiper-button-prev:hover {
+    background: rgba(40, 40, 40, 0.5);
+}
+
+.swiper-container {
+    position: relative;
+    padding-bottom: 2rem; /* Отступ для пагинации */
+}
+
+.swiper-pagination {
+    position: absolute;
+    bottom: 0 !important; /* Пагинация ниже карусели */
+    top: auto !important;
+    text-align: center;
+    padding-top: 0.5rem;
+    z-index: 10; /* Убедимся, что пагинация видна */
+}
+
+.swiper-pagination-bullet {
+    background: #4a90e2;
+    opacity: 0.5;
+    width: 10px;
+    height: 10px;
+    margin: 0 5px;
+}
+
+.swiper-pagination-bullet-active {
+    opacity: 1;
+}
+
+/* Адаптивность боковой панели */
+@media (max-width: 640px) {
+    aside {
+        width: 100%;
+        height: auto;
+        position: relative;
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    main {
+        margin-left: 0;
+    }
+}
+
+@media (max-width: 768px) {
+    aside {
+        width: 12rem;
+    }
+    main {
+        margin-left: 12rem;
+    }
+}
+
+.featuredSwiper .swiper-slide {
+    width: auto;
+}

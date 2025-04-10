@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ru" class="light">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/swiper.css' %}">
+    <link rel="stylesheet" href="{% static 'css/output.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+</head>
+<body class="bg-gray-100 dark:bg-dark-bg text-gray-800 dark:text-dark-text min-h-screen flex">
+    <aside class="fixed top-0 left-0 h-full w-64 glass border-r border-gray-200/50 dark:border-dark-border shadow-lg flex flex-col">
+        <div class="p-6 flex items-center space-x-3">
+            <span class="text-xl font-bold">4Cheezy</span>
+        </div>
+        <nav>
+            <ul class="space-y-2 px-4">
+                <li>
+                    <a href="{% url 'home' %}" class="block px-4 py-2 text-gray-700 dark:text-dark-text hover:bg-gray-200/50 dark:hover:bg-dark-border rounded-lg transition-all duration-300">Главная</a>
+                </li>
+                <li>
+                    <a href="{% url 'news_home' %}" class="block px-4 py-2 text-gray-700 dark:text-dark-text hover:bg-gray-200/50 dark:hover:bg-dark-border rounded-lg transition-all duration-300">Новости</a>
+                </li>
+            </ul>
+        </nav>
+        <div class="flex-grow"></div>
+        <div class="p-4">
+            <ul class="space-y-2">
+                {% if user.is_authenticated %}
+                    <li>
+                        <a href="{% url 'create' %}" class="block px-4 py-2 text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-all duration-300">Добавить статью</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'logout' %}" class="block px-4 py-2 text-gray-700 dark:text-dark-text hover:bg-gray-200/50 dark:hover:bg-dark-border rounded-lg transition-all duration-300">Выйти ({{ user.username }})</a>
+                    </li>
+                {% else %}
+                    <li>
+                        <a href="{% url 'login' %}" class="block px-4 py-2 text-gray-700 dark:text-dark-text hover:bg-gray-200/50 dark:hover:bg-dark-border rounded-lg transition-all duration-300">Войти</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'register' %}" class="block px-4 py-2 text-gray-700 dark:text-dark-text hover:bg-gray-200/50 dark:hover:bg-dark-border rounded-lg transition-all duration-300">Регистрация</a>
+                    </li>
+                {% endif %}
+                <li>
+                    <button id="theme-toggle" class="w-full px-4 py-2 text-gray-700 dark:text-dark-text hover:bg-gray-200/50 dark:hover:bg-dark-border rounded-lg transition-all duration-300 flex items-center space-x-2">
+                        <span id="theme-icon">☀️</span>
+                        <span>Смена темы</span>
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </aside>
+    <main class="ml-64 flex-1 p-6">
+        {% if messages %}
+            <div class="max-w-2xl mx-auto mb-6">
+                {% for message in messages %}
+                    <div class="p-4 rounded-lg flex justify-between items-center {% if message.tags == 'success' %}bg-green-100 text-green-800 dark:bg-green-800 dark:text-green-100{% else %}bg-red-100 text-red-800 dark:bg-red-800 dark:text-red-100{% endif %}">
+                        {{ message }}
+                        <button onclick="this.parentElement.remove()" class="text-sm font-semibold">✕</button>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% block content %}
+        {% endblock %}
+    </main>
+    <script src="{% static 'js/swiper.js' %}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Инициализация Swiper для страницы статьи
+            const swiper = new Swiper('.mySwiper', {
+                pagination: {
+                    el: '.swiper-pagination',
+                    clickable: true,
+                },
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                },
+            });
+
+            // Инициализация Swiper для важных новостей на главной странице
+            const featuredSwiper = new Swiper('.featuredSwiper', {
+                slidesPerView: 1,
+                spaceBetween: 24,
+                breakpoints: {
+                    640: { // Экраны ≥ 640px
+                        slidesPerView: 2,
+                    },
+                    1024: { // Экраны ≥ 1024px
+                        slidesPerView: 3,
+                    },
+                },
+                pagination: {
+                    el: '.swiper-pagination',
+                    clickable: true,
+                },
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                },
+                loop: true,
+                autoplay: {
+                    delay: 5000,
+                    disableOnInteraction: false,
+                },
+            });
+
+            // Переключение темы
+            const toggleButton = document.getElementById('theme-toggle');
+            const themeIcon = document.getElementById('theme-icon');
+            const htmlElement = document.documentElement;
+
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme) {
+                htmlElement.classList.toggle('dark', savedTheme === 'dark');
+                themeIcon.textContent = savedTheme === 'dark' ? '🌙' : '☀️';
+            } else {
+                const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                htmlElement.classList.toggle('dark', prefersDark);
+                themeIcon.textContent = prefersDark ? '🌙' : '☀️';
+                localStorage.setItem('theme', prefersDark ? 'dark' : 'light');
+            }
+
+            toggleButton.addEventListener('click', () => {
+                const isDark = htmlElement.classList.toggle('dark');
+                const newTheme = isDark ? 'dark' : 'light';
+                themeIcon.textContent = isDark ? '🌙' : '☀️';
+                localStorage.setItem('theme', newTheme);
+            });
+        });
+    </script>
+</body>
+</html>
